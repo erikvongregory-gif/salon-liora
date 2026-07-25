@@ -74,6 +74,28 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      <p
+        className="salon-section-pad"
+        style={{
+          maxWidth: "1280px",
+          margin: "28px auto 0",
+          padding: "0 80px",
+          fontSize: "11px",
+          fontWeight: "300",
+          color: "rgba(249,244,238,0.22)",
+        }}
+      >
+        Erstellt von{" "}
+        <a
+          href="https://evglab.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="salon-link-footer"
+          style={{ color: "rgba(249,244,238,0.35)", textDecoration: "none", transition: "color 0.2s" }}
+        >
+          evglab.com
+        </a>
+      </p>
     </footer>
   );
 }
