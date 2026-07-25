@@ -40,7 +40,12 @@ export default function Nav({ site }: Props) {
             alt={BRAND.name}
             width={160}
             height={46}
-            style={{ height: "46px", width: "auto", borderRadius: "3px" }}
+            style={{
+              height: "46px",
+              width: "auto",
+              transition: "filter 0.35s",
+              filter: site.navScrolled ? "brightness(0)" : "none",
+            }}
             priority
           />
         </a>

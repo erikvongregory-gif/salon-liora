@@ -23,7 +23,7 @@ export default function Footer() {
             alt={BRAND.name}
             width={160}
             height={44}
-            style={{ height: "44px", width: "auto", borderRadius: "3px", marginBottom: "14px", display: "block" }}
+            style={{ height: "44px", width: "auto", marginBottom: "14px", display: "block" }}
           />
           <p style={{ fontSize: "12px", fontWeight: "300", color: "rgba(249,244,238,0.3)" }}>
             © 2026 {BRAND.name}. Demo-Referenzprojekt.
