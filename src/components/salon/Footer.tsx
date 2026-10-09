@@ -69,8 +69,8 @@ export default function Footer() {
         className="pointer-events-none mt-16 flex select-none justify-center font-sans text-[29vw] font-light leading-[0.74] tracking-[-0.06em]"
       >
         {"LIORA".split("").map((ch, i) => (
-          <span key={i} className="-mx-[0.08em] block overflow-hidden px-[0.08em]">
-            <span data-fletter className="wordmark block">
+          <span key={i} className="-mx-[0.15em] block overflow-hidden">
+            <span data-fletter className="wordmark block px-[0.15em]">
               {ch}
             </span>
           </span>

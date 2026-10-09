@@ -156,8 +156,8 @@ export default function Hero({ site }: { site: SalonSiteState }) {
           style={{ maskImage: "linear-gradient(to bottom, #000 45%, transparent 98%)" }}
         >
           {"LIORA".split("").map((ch, i) => (
-            <span key={i} className="-mx-[0.08em] block overflow-hidden px-[0.08em] pb-[0.04em]">
-              <span data-letter className="js-intro wordmark block">
+            <span key={i} className="-mx-[0.15em] block overflow-hidden pb-[0.04em]">
+              <span data-letter className="js-intro wordmark block px-[0.15em]">
                 {ch}
               </span>
             </span>
