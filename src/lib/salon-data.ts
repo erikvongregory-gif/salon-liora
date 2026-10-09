@@ -48,6 +48,7 @@ export const TEAM = [
 
 export const IMAGES = {
   hero: "/salon/hero.webp",
+  portrait: "/salon/gallery-03.webp",
   about: ["/salon/about-helene.webp", "/salon/about-clara.webp", "/salon/about-sisters.webp"] as const,
   services: ["/salon/service-cut.webp", "/salon/service-color.webp", "/salon/service-care.webp"] as const,
 } as const;
@@ -66,6 +67,50 @@ export const galleryImgUrls = [
   "/salon/gallery-11.webp",
   "/salon/gallery-12.webp",
 ];
+
+export const galleryCaptions = [
+  "Soft Bob",
+  "Brunette Waves",
+  "Platinblond",
+  "Balayage Curls",
+  "Modern Fade",
+  "Vorher / Nachher",
+  "Hochsteckfrisur",
+  "Kupfer",
+  "Curtain Bangs",
+  "Kinderschnitt",
+  "Glossy Brunette",
+  "Soft Blond",
+];
+
+export const SERVICE_CATEGORIES = [
+  {
+    no: "01",
+    title: "Schnitt & Styling",
+    text: "Präzise Schnitte, die zu Gesicht, Haarstruktur und Alltag passen.",
+    from: "Ab 25 €",
+    image: "/salon/service-cut.webp",
+  },
+  {
+    no: "02",
+    title: "Balayage & Farbe",
+    text: "Natürliche Verläufe, Highlights und Glossings mit Tiefe und Glanz.",
+    from: "Ab 113 €",
+    image: "/salon/gallery-04.webp",
+  },
+  {
+    no: "03",
+    title: "Herren & Kinder",
+    text: "Klare Linien und entspannte Termine für die ganze Familie.",
+    from: "Ab 25 €",
+    image: "/salon/gallery-05.webp",
+  },
+] as const;
+
+export const PRICE_GROUPS = [
+  { title: "Damen", ids: ["wsf", "wf", "ans", "ahl", "sok", "sgk", "bal"] },
+  { title: "Herren & Kinder", ids: ["her", "mae", "bub"] },
+] as const;
 
 export const serviceData = [
   { id: "wsf", name: "Waschen, Schneiden & Föhnen", duration: "60 Min", price: "58 €" },

@@ -2,27 +2,11 @@
 
 import { useCookieConsent } from "@/context/CookieConsentContext";
 
-export default function CookieSettingsLink() {
+export default function CookieSettingsLink({ className = "" }: { className?: string }) {
   const { openSettings } = useCookieConsent();
 
   return (
-    <button
-      type="button"
-      onClick={openSettings}
-      className="salon-link-footer"
-      style={{
-        fontSize: "11px",
-        fontWeight: 300,
-        color: "#7A6A60",
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        transition: "color 0.2s",
-        padding: 0,
-        fontFamily: "inherit",
-        textDecoration: "none",
-      }}
-    >
+    <button type="button" onClick={openSettings} className={`transition-colors ${className}`}>
       Cookie-Einstellungen
     </button>
   );

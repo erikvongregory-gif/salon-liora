@@ -20,7 +20,7 @@ export default function ImpressumPage() {
           <br />
           {LOCATIONS.lindenau.zipCity}
         </p>
-        <p style={{ marginTop: "12px", fontSize: "14px", opacity: 0.75 }}>
+        <p className="mt-3 text-sm opacity-75">
           Dies ist ein fiktives Demo-Referenzprojekt. Alle Angaben sind beispielhaft.
         </p>
       </Section>

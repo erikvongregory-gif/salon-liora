@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Instrument_Serif, Inter_Tight } from "next/font/google";
 import CookieConsentManager from "@/components/cookie/CookieConsentManager";
 import ConsentAwareAnalytics from "@/components/cookie/ConsentAwareAnalytics";
 import { CookieConsentProvider } from "@/context/CookieConsentContext";
 import { BRAND } from "@/lib/salon-data";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const instrument = Instrument_Serif({
+  variable: "--font-instrument",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: "400",
   style: ["normal", "italic"],
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
 });
@@ -56,8 +56,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${cormorant.variable} ${dmSans.variable} h-full`}>
+    <html lang="de" className={`${instrument.variable} ${interTight.variable} h-full`}>
       <body className="min-h-full">
+        <noscript>
+          <style>{`.js-intro{visibility:visible!important}`}</style>
+        </noscript>
         <CookieConsentProvider>
           {children}
           <CookieConsentManager />

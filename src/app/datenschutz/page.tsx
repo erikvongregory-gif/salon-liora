@@ -20,7 +20,7 @@ export default function DatenschutzPage() {
           <br />
           Telefon: {BRAND.phone}
         </p>
-        <p style={{ marginTop: "12px", fontSize: "14px", opacity: 0.75 }}>
+        <p className="mt-3 text-sm opacity-75">
           Dies ist ein fiktives Demo-Referenzprojekt. Alle Angaben sind beispielhaft.
         </p>
       </Section>
@@ -43,25 +43,25 @@ export default function DatenschutzPage() {
       </Section>
 
       <Section title="4. Cookies und Einwilligung (TTDSG)">
-        <p style={{ marginBottom: "12px" }}>
+        <p className="mb-3">
           Unsere Website verwendet Cookies und vergleichbare Technologien. Beim ersten Besuch werden
           Sie über ein Cookie-Banner informiert und können Ihre Einwilligung erteilen oder verweigern.
         </p>
-        <p style={{ marginBottom: "12px" }}>
-          <strong style={{ color: "#1A1410", fontWeight: 400 }}>Notwendige Cookies:</strong> Speichern
+        <p className="mb-3">
+          <strong className="font-medium text-ink">Notwendige Cookies:</strong> Speichern
           Ihrer Cookie-Einstellungen. Diese sind für den Betrieb der Website erforderlich und werden
           ohne separate Einwilligung gesetzt (§ 25 Abs. 2 Nr. 2 TTDSG).
         </p>
-        <p style={{ marginBottom: "12px" }}>
-          <strong style={{ color: "#1A1410", fontWeight: 400 }}>Statistik-Cookies:</strong> Werden nur
+        <p className="mb-3">
+          <strong className="font-medium text-ink">Statistik-Cookies:</strong> Werden nur
           nach Ihrer ausdrücklichen Einwilligung gesetzt (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1
           TTDSG). Sie helfen uns, die Nutzung der Website anonymisiert auszuwerten.
         </p>
         <p>
-          <strong style={{ color: "#1A1410", fontWeight: 400 }}>Marketing-Cookies:</strong> Ebenfalls
+          <strong className="font-medium text-ink">Marketing-Cookies:</strong> Ebenfalls
           nur mit Einwilligung. Sie ermöglichen personalisierte Werbung auf Drittplattformen.
         </p>
-        <p style={{ marginTop: "12px" }}>
+        <p className="mt-3">
           Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft über den Link
           „Cookie-Einstellungen“ im Footer widerrufen.
         </p>

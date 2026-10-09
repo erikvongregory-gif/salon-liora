@@ -1,101 +1,100 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
 import CookieSettingsLink from "@/components/cookie/CookieSettingsLink";
 import { BRAND } from "@/lib/salon-data";
+import { gsap, scrollToId, useGSAP } from "@/lib/motion";
 
 export default function Footer() {
+  const ref = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from("[data-fletter]", {
+          yPercent: 100,
+          stagger: 0.06,
+          ease: "expo.out",
+          duration: 1.6,
+          scrollTrigger: { trigger: ref.current, start: "top 75%", once: true },
+        });
+        gsap.from("[data-flogo]", {
+          autoAlpha: 0,
+          y: 30,
+          duration: 1.4,
+          scrollTrigger: { trigger: ref.current, start: "top 85%", once: true },
+        });
+      });
+    },
+    { scope: ref },
+  );
+
   return (
-    <footer style={{ background: "#120E0A", padding: "48px 0", borderTop: "1px solid rgba(249,244,238,0.06)" }}>
-      <div
-        className="salon-section-pad salon-footer-flex"
-        style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "0 80px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          <Image
-            src={BRAND.logo}
-            alt={BRAND.name}
-            width={160}
-            height={44}
-            style={{ height: "44px", width: "auto", marginBottom: "14px", display: "block" }}
-          />
-          <p style={{ fontSize: "12px", fontWeight: "300", color: "rgba(249,244,238,0.3)" }}>
-            © 2026 {BRAND.name}. Demo-Referenzprojekt.
-          </p>
+    <footer ref={ref} className="relative overflow-hidden bg-ink px-5 pt-20 text-paper sm:px-8">
+      <div className="mx-auto grid max-w-[1400px] gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div data-flogo>
+          <Image src={BRAND.logo} alt={BRAND.name} width={180} height={105} className="h-auto w-[150px]" />
+          <p className="mt-6 max-w-xs text-sm leading-relaxed text-paper/55">{BRAND.tagline} Seit {BRAND.since} in Familienhand.</p>
         </div>
-        <div
-          className="salon-footer-right"
-          style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "16px" }}
-        >
-          <span
-            style={{
-              color: "rgba(249,244,238,0.4)",
-              fontSize: "12px",
-              fontWeight: "300",
-              letterSpacing: "0.06em",
-            }}
-          >
-            {BRAND.instagram}
-          </span>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "24px" }}>
-            <Link
-              href="/datenschutz"
-              className="salon-link-footer"
-              style={{
-                fontSize: "11px",
-                fontWeight: "300",
-                color: "rgba(249,244,238,0.22)",
-                textDecoration: "none",
-                transition: "color 0.2s",
-              }}
-            >
-              Datenschutz
-            </Link>
-            <CookieSettingsLink />
-            <Link
-              href="/impressum"
-              className="salon-link-footer"
-              style={{
-                fontSize: "11px",
-                fontWeight: "300",
-                color: "rgba(249,244,238,0.22)",
-                textDecoration: "none",
-                transition: "color 0.2s",
-              }}
-            >
-              Impressum
-            </Link>
-          </div>
+        <nav className="grid content-start gap-3 text-sm text-paper/70" aria-label="Footer-Navigation">
+          <p className="eyebrow mb-1 text-paper/40">Salon</p>
+          {[
+            ["story", "Geschichte"],
+            ["services", "Leistungen"],
+            ["gallery", "Galerie"],
+            ["visit", "Kontakt"],
+          ].map(([id, label]) => (
+            <button key={id} type="button" onClick={() => scrollToId(id)} className="w-fit transition-colors hover:text-paper">
+              {label}
+            </button>
+          ))}
+        </nav>
+        <div className="grid content-start gap-3 text-sm text-paper/70">
+          <p className="eyebrow mb-1 text-paper/40">Kontakt</p>
+          <a href={BRAND.phoneHref} className="w-fit hover:text-paper">
+            {BRAND.phone}
+          </a>
+          <a href={`mailto:${BRAND.email}`} className="w-fit hover:text-paper">
+            {BRAND.email}
+          </a>
+          <span>{BRAND.instagram}</span>
         </div>
       </div>
-      <p
-        className="salon-section-pad"
-        style={{
-          maxWidth: "1280px",
-          margin: "28px auto 0",
-          padding: "0 80px",
-          fontSize: "11px",
-          fontWeight: "300",
-          color: "rgba(249,244,238,0.22)",
-        }}
+
+      <div
+        aria-hidden
+        className="pointer-events-none mt-16 flex select-none justify-center font-sans text-[29vw] font-light leading-[0.74] tracking-[-0.06em]"
       >
-        Erstellt von{" "}
-        <a
-          href="https://evglab.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="salon-link-footer"
-          style={{ color: "rgba(249,244,238,0.35)", textDecoration: "none", transition: "color 0.2s" }}
-        >
-          evglab.com
-        </a>
-      </p>
+        {"LIORA".split("").map((ch, i) => (
+          <span key={i} className="-mx-[0.08em] block overflow-hidden px-[0.08em]">
+            <span data-fletter className="wordmark block">
+              {ch}
+            </span>
+          </span>
+        ))}
+      </div>
+
+      <div className="relative mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-4 border-t border-white/10 py-6 text-xs text-paper/45">
+        <span>© 2026 {BRAND.name}. Demo-Referenzprojekt.</span>
+        <div className="flex flex-wrap items-center gap-5">
+          <Link href="/datenschutz" className="hover:text-paper">
+            Datenschutz
+          </Link>
+          <Link href="/impressum" className="hover:text-paper">
+            Impressum
+          </Link>
+          <CookieSettingsLink className="hover:text-paper" />
+          <span>
+            Erstellt von{" "}
+            <a href="https://evglab.com" target="_blank" rel="noopener noreferrer" className="hover:text-paper">
+              evglab.com
+            </a>
+          </span>
+        </div>
+      </div>
     </footer>
   );
 }

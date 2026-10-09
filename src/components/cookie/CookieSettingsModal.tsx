@@ -4,18 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useCookieConsent } from "@/context/CookieConsentContext";
 import { COOKIE_CATEGORIES } from "@/lib/cookie-consent";
+import { lockScroll } from "@/lib/motion";
 
-const btnBase: React.CSSProperties = {
-  padding: "13px 24px",
-  fontSize: "12px",
-  fontWeight: 400,
-  letterSpacing: "0.12em",
-  textTransform: "uppercase",
-  cursor: "pointer",
-  transition: "all 0.2s",
-  border: "none",
-  fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
-};
+const btn = "h-11 rounded-full px-5 text-[13px] font-medium transition-colors";
 
 export default function CookieSettingsModal() {
   const { settingsOpen, consent, closeSettings, savePreferences, acceptAll, rejectAll } =
@@ -36,10 +27,10 @@ export default function CookieSettingsModal() {
       if (e.key === "Escape") closeSettings();
     };
     window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
+    lockScroll(true);
     return () => {
       window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      lockScroll(false);
     };
   }, [settingsOpen, closeSettings]);
 
@@ -50,69 +41,15 @@ export default function CookieSettingsModal() {
       role="dialog"
       aria-labelledby="cookie-settings-title"
       aria-modal="true"
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 500,
-        animation: "fadeIn 0.25s ease",
-      }}
+      data-lenis-prevent
+      className="fixed inset-0 z-[700] grid place-items-center p-4"
     >
-      <div
-        onClick={closeSettings}
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "rgba(18,12,8,0.68)",
-          backdropFilter: "blur(6px)",
-          WebkitBackdropFilter: "blur(6px)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "min(520px, calc(100vw - 32px))",
-          maxHeight: "min(90vh, 680px)",
-          background: "#F9F4EE",
-          display: "flex",
-          flexDirection: "column",
-          boxShadow: "0 24px 80px rgba(0,0,0,0.22)",
-          animation: "fadeUp 0.35s ease",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "22px 28px",
-            borderBottom: "1px solid #E5DDD4",
-          }}
-        >
+      <div onClick={closeSettings} className="absolute inset-0 bg-ink/50 backdrop-blur-sm" />
+      <div className="relative flex max-h-[min(90vh,700px)] w-full max-w-[540px] flex-col overflow-hidden rounded-[32px] bg-paper shadow-2xl">
+        <div className="flex items-center justify-between px-7 pb-4 pt-7">
           <div>
-            <p
-              style={{
-                fontSize: "10px",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "#C4674A",
-                marginBottom: "3px",
-              }}
-            >
-              Datenschutz
-            </p>
-            <h2
-              id="cookie-settings-title"
-              style={{
-                fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                fontSize: "22px",
-                fontWeight: 400,
-                color: "#1A1410",
-                margin: 0,
-              }}
-            >
+            <p className="eyebrow text-rose">Datenschutz</p>
+            <h2 id="cookie-settings-title" className="mt-1 font-serif text-3xl leading-none">
               Cookie-Einstellungen
             </h2>
           </div>
@@ -120,202 +57,79 @@ export default function CookieSettingsModal() {
             type="button"
             onClick={closeSettings}
             aria-label="Schließen"
-            className="salon-icon-btn"
-            style={{
-              background: "transparent",
-              border: "none",
-              color: "#7A6A60",
-              cursor: "pointer",
-              fontSize: "20px",
-              lineHeight: 1,
-              padding: "4px",
-            }}
+            className="grid size-10 place-items-center rounded-full bg-ink/5 transition-[transform,background] duration-500 hover:rotate-90 hover:bg-ink hover:text-paper"
           >
-            ✕
+            <svg viewBox="0 0 16 16" className="size-3.5" aria-hidden>
+              <path d="M3 3l10 10M13 3 3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
           </button>
         </div>
 
-        <div style={{ flex: 1, overflowY: "auto", padding: "24px 28px" }}>
-          <p
-            style={{
-              fontSize: "14px",
-              fontWeight: 300,
-              color: "#7A6A60",
-              lineHeight: 1.7,
-              marginBottom: "24px",
-            }}
-          >
-            Wählen Sie, welche Cookies wir verwenden dürfen. Notwendige Cookies können nicht
-            deaktiviert werden. Weitere Informationen in der{" "}
-            <Link href="/datenschutz" style={{ color: "#C4674A" }}>
+        <div className="flex-1 overflow-y-auto px-7 pb-6">
+          <p className="mb-5 text-sm leading-relaxed text-muted">
+            Wählen Sie, welche Cookies wir verwenden dürfen. Notwendige Cookies können nicht deaktiviert werden.
+            Weitere Informationen in der{" "}
+            <Link href="/datenschutz" className="text-rose underline underline-offset-4">
               Datenschutzerklärung
             </Link>
             .
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div className="grid gap-3">
             {COOKIE_CATEGORIES.map((cat) => {
-              const checked =
-                cat.id === "essential"
-                  ? true
-                  : cat.id === "statistics"
-                    ? statistics
-                    : marketing;
+              const checked = cat.id === "essential" ? true : cat.id === "statistics" ? statistics : marketing;
               const disabled = cat.required;
 
               return (
-                <div
-                  key={cat.id}
-                  style={{
-                    padding: "18px 20px",
-                    border: "1px solid #E5DDD4",
-                    background: "#FEFCFA",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "16px",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <h3
-                      style={{
-                        fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                        fontSize: "18px",
-                        fontWeight: 400,
-                        color: "#1A1410",
-                        margin: 0,
-                      }}
-                    >
+                <div key={cat.id} className="rounded-[20px] bg-cream p-5">
+                  <div className="mb-2 flex items-center justify-between gap-4">
+                    <h3 className="font-serif text-xl leading-none">
                       {cat.title}
                       {cat.required && (
-                        <span
-                          style={{
-                            fontSize: "10px",
-                            letterSpacing: "0.12em",
-                            textTransform: "uppercase",
-                            color: "#C4674A",
-                            marginLeft: "10px",
-                            fontFamily: "var(--font-dm-sans), 'DM Sans', sans-serif",
-                          }}
-                        >
-                          Immer aktiv
-                        </span>
+                        <span className="eyebrow ml-3 align-middle !text-[10px] text-rose">Immer aktiv</span>
                       )}
                     </h3>
                     <label
-                      style={{
-                        position: "relative",
-                        display: "inline-block",
-                        width: "44px",
-                        height: "24px",
-                        flexShrink: 0,
-                        cursor: disabled ? "default" : "pointer",
-                        opacity: disabled ? 0.5 : 1,
-                      }}
+                      className={`relative inline-block h-6 w-11 shrink-0 ${disabled ? "cursor-default opacity-50" : "cursor-pointer"}`}
                     >
                       <input
                         type="checkbox"
                         checked={checked}
                         disabled={disabled}
+                        aria-label={cat.title}
                         onChange={(e) => {
                           if (cat.id === "statistics") setStatistics(e.target.checked);
                           if (cat.id === "marketing") setMarketing(e.target.checked);
                         }}
-                        style={{
-                          opacity: 0,
-                          width: 0,
-                          height: 0,
-                          position: "absolute",
-                        }}
+                        className="peer absolute size-0 opacity-0"
                       />
                       <span
-                        style={{
-                          position: "absolute",
-                          inset: 0,
-                          background: checked ? "#C4674A" : "#E5DDD4",
-                          borderRadius: "24px",
-                          transition: "background 0.2s",
-                        }}
+                        className={`absolute inset-0 rounded-full transition-colors peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-rose ${checked ? "bg-rose" : "bg-sand"}`}
                       />
                       <span
-                        style={{
-                          position: "absolute",
-                          top: "3px",
-                          left: checked ? "23px" : "3px",
-                          width: "18px",
-                          height: "18px",
-                          background: "#F9F4EE",
-                          borderRadius: "50%",
-                          transition: "left 0.2s",
-                        }}
+                        className={`absolute top-[3px] size-[18px] rounded-full bg-paper transition-[left] duration-300 ${checked ? "left-[23px]" : "left-[3px]"}`}
                       />
                     </label>
                   </div>
-                  <p
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: 300,
-                      color: "#7A6A60",
-                      lineHeight: 1.6,
-                      margin: 0,
-                    }}
-                  >
-                    {cat.description}
-                  </p>
+                  <p className="text-[13px] leading-relaxed text-muted">{cat.description}</p>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div
-          style={{
-            padding: "20px 28px",
-            borderTop: "1px solid #E5DDD4",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "10px",
-          }}
-        >
-          <button
-            type="button"
-            onClick={rejectAll}
-            className="salon-cookie-btn-outline"
-            style={{
-              ...btnBase,
-              background: "transparent",
-              color: "#1A1410",
-              border: "1px solid #E5DDD4",
-            }}
-          >
+        <div className="flex flex-wrap gap-2 border-t border-line px-7 py-5">
+          <button type="button" onClick={rejectAll} className={`${btn} border border-line hover:border-ink/40`}>
             Nur notwendige
           </button>
           <button
             type="button"
             onClick={() => savePreferences(statistics, marketing)}
-            style={{
-              ...btnBase,
-              background: "#1A1410",
-              color: "#F9F4EE",
-              flex: 1,
-            }}
+            className={`${btn} flex-1 bg-ink text-paper hover:bg-ink-soft`}
           >
             Auswahl speichern
           </button>
-          <button
-            type="button"
-            onClick={acceptAll}
-            className="salon-btn-accent"
-            style={{
-              ...btnBase,
-              background: "#C4674A",
-              color: "#F9F4EE",
-            }}
-          >
+          <button type="button" onClick={acceptAll} className={`${btn} bg-rose text-paper hover:bg-rose-deep`}>
             Alle akzeptieren
           </button>
         </div>
